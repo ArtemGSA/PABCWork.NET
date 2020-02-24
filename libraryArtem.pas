@@ -16,6 +16,9 @@ procedure fill2d (var m:m2d; yy: integer; xx: integer);
 procedure wuwod2d (m:m2d; nn:integer; mm: integer);
 function fibonaccin(n: integer ; y: integer):integer;
 Function fibonaccirec(n: integer ):integer;
+Function gcdF (x, y: integer): integer;
+Function lcmf(a, b: integer):integer; 
+Function factrecf (a: integer):integer;
 procedure content;
 
 implementation
@@ -77,6 +80,35 @@ begin;
 end;
 
 
+Function factrecf (a: integer):integer;
+begin;
+  if a<=15
+  then
+    factrecf:=1
+  else
+    factrecf:=a*factrecf(a-1);
+end;
+
+
+Function gcdF (x, y: integer): integer;
+var z: integer;
+begin
+  if y>x then 
+  begin
+    z := x;
+    x := y;
+    y := z; 
+  end;
+  while y<>0 do
+  begin
+    z:=y;
+    y:=x mod y;
+    x:=z;
+  end;
+  gcdF:=x;
+end;
+
+
 Function fibonaccirec(n: integer ):integer;
 var
   i, x, z: integer;
@@ -89,11 +121,15 @@ begin;
   end
 end;
 
-begin;
-  readln(nn);
-  nn:=fibonaccirec(nn);
-  write(nn);
-end.
+
+
+Function lcmf(a, b: integer):integer; 
+var
+  x: integer;
+begin
+  x:=a*b div gcdF(a, b);
+  lcmf:=x;
+end;
 
 
 procedure summa(m:mas; nn:integer; var sum:real);
@@ -104,6 +140,7 @@ begin;
   for i:=1 to nn do
     sum:=sum+m[i]
 end;
+
 
 procedure average(m:mas; nn:integer; var middle:real);
 var
@@ -128,6 +165,9 @@ begin;
 'procedure fill2d (var m:m2d; xx, yy: integer); ',
 'Function fibonaccin(n: integer ; y: integer):integer;',
 'Function fibonaccirec(n: integer ):integer;',
+'Function gcdF (x, y: integer): integer;',
+'Function lcmf(a, b: integer):integer; ',
+'Function factrecf (a: integer):integer;',
 'procedure content; ')
 end;
 
