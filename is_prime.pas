@@ -1,8 +1,10 @@
 ﻿Program is_prime;
-var i, n: integer;
-prime: boolean;
+var n: integer;
+
+
+Function prime(n: integer): boolean;
+var i:integer;
 begin;
-  readln(n);
   prime:=true;
   for i:=2 to trunc(sqrt(n)) do
   begin
@@ -12,5 +14,10 @@ begin;
       break
     end;
   end;
-  writeln(prime)
+end;
+
+
+begin;
+  readln(n);
+  writeln(prime(n))
 end.

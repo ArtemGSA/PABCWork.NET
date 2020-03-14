@@ -4,9 +4,8 @@ var
 begin;
   read(n);
   resul:=n;
-  while n>2 do
+  for n:=n-1 downto 2 do
   begin
-    n-=1;
     resul*=n;
   end;
   writeln(resul);

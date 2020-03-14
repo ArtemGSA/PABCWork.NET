@@ -3,6 +3,7 @@
 interface
 
 type
+  masbool=array of boolean;
   mas=array [1..50] of real;
   masint=array of integer;
   m2d=array [1..10, 1..10] of real;
@@ -19,6 +20,11 @@ Function fibonaccirec(n: integer ):integer;
 Function gcdF (x, y: integer): integer;
 Function lcmf(a, b: integer):integer; 
 Function factrecf (a: integer):integer;
+procedure bubble_sort (var a:masint);
+Function is_powerint (n, base: integer): boolean;
+Function get_power_forward_int (n, base, power: integer): integer;
+Function get_power_backward_int (n, base: integer): integer;
+Function prime(n: integer): boolean;
 procedure content;
 
 implementation
@@ -41,6 +47,33 @@ begin;
   for i:=1 to nn do
     write(m[i], ' ');
   writeln
+end;
+
+
+Function is_powerint (n, base: integer): boolean;
+begin;
+  if n = 1 then 
+    is_powerint := true
+  else
+    if n mod base = 0 then 
+      is_powerint := is_powerint(n div base, base)
+    else
+      is_powerint := false;
+end;
+
+
+procedure bubble_sort (var a:masint);
+var n, i, j, tmp: integer;
+begin;
+  n:=length(a);
+  for i:=0 to n-2 do
+    for j:=0 to n-2-i do
+      if a[j]>a[j+1] then
+      begin
+        tmp:=a[j];
+        a[j]:=a[j+1];
+        a[j+1]:=tmp;
+      end;
 end;
 
 
@@ -142,6 +175,52 @@ begin;
 end;
 
 
+Function get_power_backward_int (n, base: integer): integer;
+var i: integer;
+begin;
+  if n = 1 then 
+    get_power_backward_int := 0
+  else
+    if n mod base = 0 then
+    begin
+      i:=get_power_backward_int(n div base, base);
+      if i >= 0 then
+        get_power_backward_int := 1 + i
+      else
+        get_power_backward_int:=-1
+    end
+    else
+      get_power_backward_int := -1;
+end;
+
+
+Function get_power_forward_int (n, base, power: integer): integer;
+begin;
+  if n = 1 then 
+    get_power_forward_int := power
+  else
+    if n mod base = 0 then
+      get_power_forward_int:=get_power_forward_int(n div base, base, power+1)
+    else
+      get_power_forward_int := -1;
+end;
+
+
+Function prime(n: integer): boolean;
+var i:integer;
+begin;
+  prime:=true;
+  for i:=2 to trunc(sqrt(n)) do
+  begin
+    if n mod i=0 then
+    begin
+      prime:=false;
+      break
+    end;
+  end;
+end;
+
+
 procedure average(m:mas; nn:integer; var middle:real);
 var
   i:integer;
@@ -155,7 +234,7 @@ end;
 
 procedure content;
 begin;
-  write('Команды библиотеки: ',' mas=array of real; ',
+  write('Coдержимое библиотеки: ',' mas=array of real; ',
 'procedure wwod (var m:mas; nn:integer); ',
 'procedure wuwod (m:mas; nn:integer);',
 'procedure summa (m:mas; nn:integer; var sum:real); ',
@@ -168,6 +247,11 @@ begin;
 'Function gcdF (x, y: integer): integer;',
 'Function lcmf(a, b: integer):integer; ',
 'Function factrecf (a: integer):integer;',
+'procedure bubble_sort (var a:IntArr1D);',
+'Function is_powerint (n, base: integer): boolean;',
+'Function get_power_backward_int (n, base: integer): integer;',
+'Function get_power_forward_int (n, base, power: integer): integer;',
+'Function prime(n: integer): boolean;',
 'procedure content; ')
 end;
 
